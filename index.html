@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <title>Jani Engine</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Saira+SemiCondensed:wght@900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="light">
+
+    <!-- LOADING -->
+    <div id="loadingScreen">
+        <div id="loadingBox"></div>
+        <div id="loadingJ">J</div>
+    </div>
+
+    <!-- THEME BUTTON -->
+    <button id="themeToggle" class="theme-btn">☀ / 🌙</button>
+
+    <!-- HOME SCREEN -->
+    <div id="homeScreen" class="home-screen">
+
+        <!-- LOGO -->
+        <div class="jani-logo" id="janiTitle">
+            <span class="jani">JANI</span>
+            <span class="engine">ENGINE</span>
+        </div>
+
+        <!-- SEARCH INPUT -->
+        <input id="searchInput" type="text" placeholder="Search anything…" class="search-input">
+
+        <!-- TABS -->
+        <div class="tabs">
+            <span class="tab">Web</span>
+            <span class="tab">Images</span>
+            <span class="tab">Videos</span>
+            <span class="tab">News</span>
+        </div>
+
+        <!-- SEARCH BUTTON -->
+        <button id="searchBtn" class="search-btn">Search</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

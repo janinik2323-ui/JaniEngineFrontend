@@ -1,0 +1,250 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    transition: background 0.3s ease;
+}
+
+body.dark {
+    background: #0f0f0f;
+    color: white;
+}
+
+/* THEME BUTTON */
+.theme-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 22px;
+    border-radius: 25px;
+    border: none;
+    background: #00aaff;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 0 12px #00aaff;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.theme-btn:hover {
+    box-shadow: 0 0 20px #00aaff;
+    transform: scale(1.07);
+}
+
+/* LOADING SCREEN */
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.85);
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 240px;
+    z-index: 999;
+    opacity: 1;
+}
+
+body.light #loadingScreen {
+    background: rgba(240, 240, 240, 0.85);
+}
+
+#loadingBox {
+    width: 150px;
+    height: 150px;
+    background: #008CFF;
+    border: none;
+    border-radius: 20px;
+    position: absolute;
+    z-index: 1;
+
+    animation: 
+        boxGrow 1.2s ease-out forwards,
+        boxFade 2.6s infinite ease-in-out;
+}
+
+
+
+@keyframes boxGrow {
+    0%   { transform: scale(0.7); opacity: 1; }
+    60%  { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes boxFade {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.35; }
+    100% { opacity: 1; }
+}
+
+
+
+
+#loadingJ {
+    font-family: 'Saira SemiCondensed', sans-serif;
+    font-size: 110px;
+    font-weight: 900;
+    transform: scaleX(1.18);
+    color: black;   /* LIGHT TEMA */
+    z-index: 2;
+    animation: jFade 2.6s infinite ease-in-out;
+}
+
+
+body.dark #loadingJ {
+    color: white;
+}
+
+@keyframes jFade {
+    0%   { opacity: 1; }
+    40%  { opacity: 0.35; }
+    100% { opacity: 1; }
+}
+
+/* HOME SCREEN */
+.home-screen {
+    text-align: center;
+    margin-top: 120px;
+}
+
+.jani-logo {
+    font-family: 'Saira SemiCondensed', sans-serif;
+    font-size: 68px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    transform: scaleX(1.18);
+    margin-bottom: 20px;
+}
+
+.jani {
+    color: #00aaff;
+}
+
+.engine {
+    color: #333;
+}
+
+/* SEARCH INPUT */
+.search-input {
+    width: 45%;
+    padding: 10px 16px;
+    font-size: 17px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background: #ffffffcc;
+    transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.search-input:focus {
+    box-shadow: 0 0 14px #00aaff, 0 0 28px #00aaff55;
+    background: #ffffffee;
+}
+
+/* TABS */
+.tabs {
+    margin-top: 20px;
+}
+
+.tab {
+    margin: 0 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #555;
+}
+
+.tab:hover {
+    color: #00aaff;
+}
+
+/* SEARCH BUTTON */
+.search-btn {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #00aaff;
+    color: white;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background: #0088cc;
+}
+
+/* RESULTS */
+#results {
+    margin: 40px auto;
+    width: 70%;
+    font-size: 18px;
+}
+#janiTitle {
+    position: absolute;
+    top: 120px; /* ovo je mjesto gdje ga želiš */
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+    transition: transform 0.9s ease, top 0.9s ease, left 0.9s ease;
+    z-index: 50;
+}
+
+#janiTitle.small {
+    position: fixed;      /* VAŽNO: sada te prati dok skrolaš */
+    top: 20px;
+    left: 20px;
+    transform: scale(0.55);
+    z-index: 9999;
+}
+
+.home-screen {
+    margin-top: 220px; /* povećano jer je logo absolute */
+}
+
+/* DARK MODE FIXES */
+
+/* Search input */
+body.dark .search-input {
+    background: #222;
+    color: white;
+    box-shadow: 0 0 10px #00aaff55;
+}
+
+/* Tabs */
+body.dark .tab {
+    color: #ccc;
+}
+body.dark .tab:hover {
+    color: #00aaff;
+}
+
+/* Search button */
+body.dark .search-btn {
+    background: #0088cc;
+}
+body.dark .search-btn:hover {
+    background: #006699;
+}
+
+/* Results */
+body.dark #results {
+    color: white;
+}
+
+/* ENGINE tekst */
+body.dark .engine {
+    color: #ddd;
+}
+
+/* Theme button */
+body.dark .theme-btn {
+    background: #222;
+    color: #00aaff;
+    box-shadow: 0 0 12px #00aaff55;
+}
+
+/* Loading background */
+body.dark #loadingScreen {
+    background: rgba(0, 0, 0, 0.85);
+}
