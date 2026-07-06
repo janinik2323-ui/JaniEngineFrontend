@@ -44,7 +44,7 @@ function showResults(data) {
         const div = document.createElement("div");
         div.innerHTML = `
             <h2>${item.title}</h2>
-            <p>${item.snippet?.substring(0, 200) || ""}...</p>
+            <p>${item.content?.substring(0, 200) || ""}...</p>
             <a href="${item.url}" target="_blank">${item.url}</a>
             <hr>
         `;
