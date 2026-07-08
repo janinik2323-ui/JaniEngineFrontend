@@ -1,9 +1,12 @@
 // ===============================
-// STICKY BAR ELEMENTS
+// GLOBAL STATE
 // ===============================
 const searchInputTop = document.getElementById("searchInputTop");
 const imagesBtnTop = document.getElementById("imagesBtnTop");
 const videosBtnTop = document.getElementById("videosBtnTop");
+
+let allImages = [];
+let allVideos = [];
 
 // ===============================
 // MAIN SEARCH FUNCTION
@@ -12,19 +15,19 @@ function startSearch() {
     const q = document.getElementById("searchInput").value.trim();
     if (!q) return;
 
-    // hide home screen
+    // sakrij home screen
     document.getElementById("homeScreen").style.display = "none";
 
-    // hide home search UI
+    // sakrij početni search UI
     document.getElementById("searchInput").style.opacity = "0";
     document.querySelector(".tabs").style.opacity = "0";
     document.getElementById("searchBtn").style.opacity = "0";
 
-    // show loading
+    // pokaži loading
     const loading = document.getElementById("loadingScreen");
     loading.style.display = "flex";
 
-    // fetch results from backend
+    // fetch prema backendu
     fetch("https://janienginebackend-1.onrender.com/api/search?q=" + encodeURIComponent(q))
         .then(res => res.json())
         .then(data => {
@@ -33,7 +36,11 @@ function startSearch() {
                 renderResults(data);
                 animateLogo();
 
-                // update sticky search bar
+                // pokaži gornji bar tek sada
+                const topBar = document.getElementById("topBar");
+                topBar.style.display = "flex";
+
+                // upiši query u gornji search
                 searchInputTop.value = q;
             }, 1500);
         })
@@ -45,7 +52,7 @@ function startSearch() {
 }
 
 // ===============================
-// STICKY SEARCH BAR → ENTER SEARCH
+// GORNJI SEARCH BAR → ENTER
 // ===============================
 searchInputTop.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
@@ -55,7 +62,7 @@ searchInputTop.addEventListener("keydown", (e) => {
 });
 
 // ===============================
-// RENDER RESULTS (WEB + IMAGES + VIDEOS)
+// RENDER RESULTS (INFO + PAR MEDIA)
 // ===============================
 function renderResults(results) {
     const webDiv = document.getElementById("webResults");
@@ -66,11 +73,14 @@ function renderResults(results) {
     imgDiv.innerHTML = "";
     vidDiv.innerHTML = "";
 
+    allImages = [];
+    allVideos = [];
+
     let hasImages = false;
     let hasVideos = false;
 
     results.forEach(r => {
-        // WEB RESULTS
+        // WEB INFO
         webDiv.innerHTML += `
             <div class="web-item">
                 <img src="${r.favicon || ""}" class="favicon" />
@@ -81,10 +91,12 @@ function renderResults(results) {
             </div>
         `;
 
-        // IMAGES
+        // SLIKE — skupljamo sve, ali na glavnoj samo malo
         if (r.images && r.images.length > 0) {
             hasImages = true;
-            r.images.forEach(img => {
+            r.images.forEach(img => allImages.push(img));
+
+            r.images.slice(0, 2).forEach(img => {
                 imgDiv.innerHTML += `
                     <div class="image-box">
                         <img src="${img}" class="thumbImg" onclick="openZoom('image', '${img}')">
@@ -94,9 +106,16 @@ function renderResults(results) {
             });
         }
 
-        // VIDEOS (YouTube)
+        // VIDEA — skupljamo sve, na glavnoj jedan
         if (r.youtube && r.youtube.thumbnail) {
             hasVideos = true;
+            allVideos.push({
+                url: r.url,
+                thumb: r.youtube.thumbnail,
+                title: r.youtube.title,
+                channel: r.youtube.channel
+            });
+
             vidDiv.innerHTML += `
                 <div class="video-box">
                     <img src="${r.youtube.thumbnail}" class="video-thumb" onclick="openZoom('video', '${r.url}')">
@@ -108,17 +127,89 @@ function renderResults(results) {
         }
     });
 
-    // SHOW TITLES
+    // TITLOVI
     document.getElementById("imagesTitle").style.display = hasImages ? "block" : "none";
     document.getElementById("videosTitle").style.display = hasVideos ? "block" : "none";
 
-    // STICKY BUTTONS
+    // GORNJI GUMBI
     imagesBtnTop.style.display = hasImages ? "inline-block" : "none";
     videosBtnTop.style.display = hasVideos ? "inline-block" : "none";
 
-    // SCROLL BUTTONS
-    imagesBtnTop.onclick = () => document.getElementById("imagesTitle").scrollIntoView({ behavior: "smooth" });
-    videosBtnTop.onclick = () => document.getElementById("videosTitle").scrollIntoView({ behavior: "smooth" });
+    // KLIK → NOVI PAGE
+    imagesBtnTop.onclick = openImagesPage;
+    videosBtnTop.onclick = openVideosPage;
+}
+
+// ===============================
+// NOVI PAGE ZA SLIKE
+// ===============================
+function openImagesPage() {
+    const win = window.open("", "_blank");
+    win.document.write(`
+        <html>
+        <head>
+            <title>Images - JANI ENGINE</title>
+            <style>
+                body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:20px; }
+                h1 { text-align:center; }
+                .grid { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
+                .item { background:white; padding:10px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+                .item img { max-width:260px; max-height:180px; object-fit:cover; border-radius:8px; display:block; }
+                .item a { display:inline-block; margin-top:8px; color:#00aaff; text-decoration:none; }
+            </style>
+        </head>
+        <body>
+            <h1>Images</h1>
+            <div class="grid">
+                ${allImages.map(src => `
+                    <div class="item">
+                        <img src="${src}">
+                        <a href="${src}" download>Download image</a>
+                    </div>
+                `).join("")}
+            </div>
+        </body>
+        </html>
+    `);
+    win.document.close();
+}
+
+// ===============================
+// NOVI PAGE ZA VIDEA
+// ===============================
+function openVideosPage() {
+    const win = window.open("", "_blank");
+    win.document.write(`
+        <html>
+        <head>
+            <title>Videos - JANI ENGINE</title>
+            <style>
+                body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:20px; }
+                h1 { text-align:center; }
+                .grid { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
+                .item { background:white; padding:10px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); width:320px; }
+                .item img { width:100%; height:180px; object-fit:cover; border-radius:8px; display:block; }
+                .item h3 { margin:8px 0 4px; }
+                .item p { margin:0 0 8px; color:#555; }
+                .item a { display:inline-block; color:#00aaff; text-decoration:none; }
+            </style>
+        </head>
+        <body>
+            <h1>Videos</h1>
+            <div class="grid">
+                ${allVideos.map(v => `
+                    <div class="item">
+                        <img src="${v.thumb}">
+                        <h3>${v.title}</h3>
+                        <p>${v.channel}</p>
+                        <a href="${v.url}" target="_blank">Open video</a>
+                    </div>
+                `).join("")}
+            </div>
+        </body>
+        </html>
+    `);
+    win.document.close();
 }
 
 // ===============================
@@ -152,7 +243,7 @@ document.getElementById("zoomOverlay").onclick = () => {
 };
 
 // ===============================
-// LOGO ANIMATION
+// LOGO ANIMATION (JANI ENGINE U KUT)
 // ===============================
 function animateLogo() {
     const title = document.getElementById("janiTitle");
@@ -162,27 +253,29 @@ function animateLogo() {
 }
 
 // ===============================
-// RESET ON LOGO CLICK
+// RESET NA KLIK LOGO
 // ===============================
 document.getElementById("janiTitle").addEventListener("click", () => {
     document.getElementById("janiTitle").classList.remove("small");
 
-    // clear results
+    // sakrij rezultate
     document.getElementById("webResults").innerHTML = "";
     document.getElementById("imagesSection").innerHTML = "";
     document.getElementById("videosSection").innerHTML = "";
 
-    // hide titles
     document.getElementById("imagesTitle").style.display = "none";
     document.getElementById("videosTitle").style.display = "none";
 
-    // clear sticky search
+    // sakrij gornji bar
+    document.getElementById("topBar").style.display = "none";
+
+    // očisti gornji search
     searchInputTop.value = "";
 
-    // show home screen
+    // pokaži home screen
     document.getElementById("homeScreen").style.display = "block";
 
-    // restore home search UI
+    // vrati početni search UI
     document.getElementById("searchInput").style.opacity = "1";
     document.querySelector(".tabs").style.opacity = "1";
     document.getElementById("searchBtn").style.opacity = "1";
