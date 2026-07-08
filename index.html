@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hr">
 <head>
@@ -10,6 +9,16 @@
 </head>
 
 <body class="light">
+
+    <!-- STICKY TOP BAR -->
+    <div id="topBar">
+        <input id="searchInputTop" placeholder="Search..." />
+
+        <div id="sectionButtons">
+            <button id="imagesBtnTop">Images</button>
+            <button id="videosBtnTop">Videos</button>
+        </div>
+    </div>
 
     <!-- LOADING -->
     <div id="loadingScreen">
@@ -29,7 +38,7 @@
             <span class="engine">ENGINE</span>
         </div>
 
-        <!-- SEARCH INPUT -->
+        <!-- SEARCH INPUT (HOME) -->
         <input id="searchInput" type="text" placeholder="Search anything…" class="search-input">
 
         <!-- TABS -->
@@ -45,27 +54,25 @@
     </div>
 
     <!-- RESULTS -->
-    <div id="results"></div>
-
-    <!-- ⭐⭐⭐ OVDE UBACI IMAGES / VIDEOS SEKCIJE ⭐⭐⭐ -->
-    <div id="section-buttons" class="section-buttons" style="display:none;">
-        <button id="imagesBtn" class="section-btn">Images</button>
-        <button id="videosBtn" class="section-btn">Videos</button>
-    </div>
-
     <div id="webResults" class="web-results"></div>
 
+    <!-- IMAGES -->
     <h2 id="imagesTitle" style="display:none;">Images</h2>
     <div id="imagesSection" class="image-grid"></div>
 
+    <!-- VIDEOS -->
     <h2 id="videosTitle" style="display:none;">Videos</h2>
     <div id="videosSection" class="video-grid"></div>
 
-    <div id="fullscreenModal" class="fullscreen-modal" style="display:none;">
-        <img id="fullscreenImage" class="fullscreen-img" />
+    <!-- FULLSCREEN ZOOM -->
+    <div id="zoomOverlay">
+        <div id="zoomContent">
+            <img id="zoomImg" />
+            <video id="zoomVideo" controls></video>
+            <a id="downloadBtn" download>Download</a>
+        </div>
     </div>
-    <!-- ⭐⭐⭐ KRAJ UBACIVANJA ⭐⭐⭐ -->
-    <script src="script.js"></script>
 
+    <script src="script.js"></script>
 </body>
 </html>
