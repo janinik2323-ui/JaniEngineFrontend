@@ -17,15 +17,14 @@ function cleanHTML(text) {
 }
 
 // ===============================
-// SERVER DOWN POPUP + TERMINAL + ERROR BLINK + GLITCH
+// SERVER DOWN POPUP + TERMINAL + SMOOTH WARNING EFFECT
 // ===============================
 function showServerDown() {
     const overlay = document.getElementById("serverDownOverlay");
     overlay.style.display = "flex";
 
+    applyWarningStyle();
     startDevTerminal();
-    startErrorBlink();
-    startGlitchEffect();
 }
 
 document.getElementById("closeServerDown").onclick = () => {
@@ -60,39 +59,21 @@ function startDevTerminal() {
         }
     }, 500);
 }
-applyWarningStyle();
 
-// ERROR BLINK
-function startErrorBlink() {
-    const title = document.querySelector("#serverDownBox h2");
-    title.classList.add("errorBlink");
-}
+// ===============================
+// SMOOTH RED TRANSITION + GLOW + ⚠ ICON (NO SHAKE)
+// ===============================
 function applyWarningStyle() {
     const title = document.querySelector("#serverDownBox h2");
 
-    // promijeni boju + glow
+    // dodaj klasu za smooth crvenu transformaciju
     title.classList.add("warningTitle");
 
-    // dodaj warning ikonu
+    // warning ikona
     const icon = document.createElement("span");
     icon.classList.add("warningIcon");
     icon.innerText = "⚠";
     title.appendChild(icon);
-}
-
-// GLITCH EFFECT
-function startGlitchEffect() {
-    const title = document.querySelector("#serverDownBox h2");
-
-    setInterval(() => {
-        title.style.transform = "translateX(2px)";
-        setTimeout(() => {
-            title.style.transform = "translateX(-2px)";
-        }, 50);
-        setTimeout(() => {
-            title.style.transform = "translateX(0px)";
-        }, 100);
-    }, 800);
 }
 
 // ===============================
