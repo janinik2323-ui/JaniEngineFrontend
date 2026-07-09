@@ -100,7 +100,7 @@ body.dark #loadingJ {
 /* HOME SCREEN */
 .home-screen {
     text-align: center;
-    margin-top: 220px; /* povećano jer je logo absolute */
+    margin-top: 220px;
 }
 
 /* JANI ENGINE TITLE */
@@ -133,30 +133,6 @@ body.dark #loadingJ {
     left: 20px;
     transform: scale(0.55);
     z-index: 9999;
-}
-
-/* LIQUID BLUR EFFECT */
-@keyframes liquidBlur {
-    0% {
-        filter: blur(0px);
-        opacity: 1;
-    }
-    40% {
-        filter: blur(6px);
-        opacity: 0.85;
-    }
-    70% {
-        filter: blur(10px);
-        opacity: 0.75;
-    }
-    100% {
-        filter: blur(0px);
-        opacity: 1;
-    }
-}
-
-.jani-liquid {
-    animation: liquidBlur 0.9s ease forwards;
 }
 
 /* SEARCH INPUT */
@@ -208,7 +184,7 @@ body.dark #loadingJ {
     background: #0088cc;
 }
 
-/* TOP BAR (pojavljuje se tek nakon animacije) */
+/* TOP BAR */
 #topBar {
   display: none;
   position: relative;
@@ -284,6 +260,7 @@ body.dark .theme-btn {
 body.dark #loadingScreen {
     background: rgba(0, 0, 0, 0.85);
 }
+
 /* ============================
    SERVER DOWN POPUP
    ============================ */
@@ -307,7 +284,7 @@ body.dark #loadingScreen {
     padding: 25px 35px;
     border-radius: 14px;
     text-align: center;
-    width: 360px;
+    width: 380px;
     box-shadow: 0 0 25px rgba(0,0,0,0.25);
     animation: popupFadeIn 0.35s ease;
 }
@@ -344,10 +321,7 @@ body.dark #loadingScreen {
     transform: scale(1.05);
 }
 
-/* ============================
-   DEVELOPER TERMINAL
-   ============================ */
-
+/* DEVELOPER TERMINAL */
 #devPreview {
     margin-top: 20px;
     background: #0a0a0a;
@@ -372,6 +346,12 @@ body.dark #loadingScreen {
     font-size: 13px;
     line-height: 1.3;
     text-align: left;
+}
+
+/* ANIMATIONS */
+@keyframes popupFadeIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 /* SMOOTH RED TRANSITION + GLOW */

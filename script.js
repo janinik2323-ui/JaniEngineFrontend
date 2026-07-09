@@ -17,7 +17,7 @@ function cleanHTML(text) {
 }
 
 // ===============================
-// SERVER DOWN POPUP + TERMINAL + SMOOTH WARNING EFFECT
+// SERVER DOWN POPUP + TERMINAL + WARNING EFFECT + SOUND
 // ===============================
 function showServerDown() {
     const overlay = document.getElementById("serverDownOverlay");
@@ -25,6 +25,7 @@ function showServerDown() {
 
     applyWarningStyle();
     startDevTerminal();
+    playWarningSound();
 }
 
 document.getElementById("closeServerDown").onclick = () => {
@@ -60,20 +61,29 @@ function startDevTerminal() {
     }, 500);
 }
 
-// ===============================
-// SMOOTH RED TRANSITION + GLOW + ⚠ ICON (NO SHAKE)
-// ===============================
+// SMOOTH RED TRANSITION + GLOW + ⚠ ICON (NO DUPLICATION)
 function applyWarningStyle() {
     const title = document.querySelector("#serverDownBox h2");
 
-    // dodaj klasu za smooth crvenu transformaciju
+    // makni stare warning ikone
+    const oldIcons = title.querySelectorAll(".warningIcon");
+    oldIcons.forEach(icon => icon.remove());
+
+    // dodaj smooth crvenu transformaciju
     title.classList.add("warningTitle");
 
-    // warning ikona
+    // dodaj warning ikonu (samo jednu)
     const icon = document.createElement("span");
     icon.classList.add("warningIcon");
     icon.innerText = "⚠";
     title.appendChild(icon);
+}
+
+// SOUND EFFECT (3s power-down)
+function playWarningSound() {
+    const sound = document.getElementById("warningSound");
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
 }
 
 // ===============================
@@ -87,7 +97,7 @@ let allImages = [];
 let allVideos = [];
 
 // ===============================
-// MAIN SEARCH FUNCTION (PREUSMJERENO NA POPUP)
+// MAIN SEARCH FUNCTION (SERVER DOWN MODE)
 // ===============================
 function startSearch() {
     showServerDown();
@@ -104,7 +114,7 @@ searchInputTop.addEventListener("keydown", (e) => {
 });
 
 // ===============================
-// RENDER RESULTS (NE KORISTI SE DOK JE SERVER DOWN)
+// RENDER RESULTS (DISABLED WHILE SERVER DOWN)
 // ===============================
 function renderResults(results) {
     const webDiv = document.getElementById("webResults");

@@ -60,11 +60,14 @@ audio, video {
     <!-- SAFE RESULTS WRAPPER -->
     <div id="safeWrapper" data-clean="true">
 
+        <!-- WEB RESULTS -->
         <div id="webResults" class="web-results safe-html"></div>
 
+        <!-- IMAGES -->
         <h2 id="imagesTitle" style="display:none;">Images</h2>
         <div id="imagesSection" class="image-grid"></div>
 
+        <!-- VIDEOS -->
         <h2 id="videosTitle" style="display:none;">Videos</h2>
         <div id="videosSection" class="video-grid"></div>
 
@@ -79,24 +82,26 @@ audio, video {
         </div>
     </div>
 
-    <!-- SERVER DOWN POPUP + TERMINAL -->
+    <!-- SERVER DOWN POPUP -->
     <div id="serverDownOverlay">
         <div id="serverDownBox">
             <h2>JANI ENGINE</h2>
             <p>
-                Server is currently unavailable.<br>
-                Please wait until the backend service is restored.<br>
-                We are working to resolve the issue as quickly as possible.
+                Server is down due to malfunction issues outside the frontend environment.<br>
+                Please wait until the maintenance process completes and the backend services are restored.
             </p>
 
             <div id="devPreview">
-                <div id="devTitle">Developer's Preview</div>
+                <div id="devTitle">Developer's preview</div>
                 <div id="devTerminal"></div>
             </div>
 
             <button id="closeServerDown">Close</button>
         </div>
     </div>
+
+    <!-- WARNING SOUND (3s power-down) -->
+    <audio id="warningSound" src="warning.mp3"></audio>
 
     <script src="script.js"></script>
 </body>
