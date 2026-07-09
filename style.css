@@ -284,3 +284,101 @@ body.dark .theme-btn {
 body.dark #loadingScreen {
     background: rgba(0, 0, 0, 0.85);
 }
+/* ============================
+   SERVER DOWN POPUP
+   ============================ */
+
+#serverDownOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(6px);
+    z-index: 99999;
+}
+
+#serverDownBox {
+    background: #ffffff;
+    padding: 25px 35px;
+    border-radius: 14px;
+    text-align: center;
+    width: 360px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.25);
+    animation: popupFadeIn 0.35s ease;
+}
+
+#serverDownBox h2 {
+    margin: 0;
+    font-size: 26px;
+    color: #008CFF;
+    font-family: 'Saira SemiCondensed', sans-serif;
+    font-weight: 900;
+}
+
+#serverDownBox p {
+    margin-top: 12px;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.45;
+}
+
+/* Close button */
+#closeServerDown {
+    margin-top: 18px;
+    padding: 10px 22px;
+    border: none;
+    background: #008CFF;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s ease;
+}
+
+#closeServerDown:hover {
+    transform: scale(1.05);
+}
+
+/* ============================
+   DEVELOPER TERMINAL
+   ============================ */
+
+#devPreview {
+    margin-top: 20px;
+    background: #0a0a0a;
+    padding: 12px;
+    border-radius: 10px;
+    color: #0f0;
+    font-family: monospace;
+    box-shadow: inset 0 0 12px rgba(0,255,0,0.25);
+}
+
+#devTitle {
+    color: #0f0;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-align: left;
+}
+
+#devTerminal {
+    height: 130px;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.3;
+    text-align: left;
+}
+
+/* ============================
+   ANIMATIONS
+   ============================ */
+
+@keyframes popupFadeIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+}

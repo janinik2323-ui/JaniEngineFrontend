@@ -15,9 +15,46 @@ function cleanHTML(text) {
         .replace(/&nbsp;/g, " ")
         .trim();
 }
-r.title = sanitize(r.title);
-r.content = sanitize(r.content);
-r.url = sanitize(r.url);
+
+// ===============================
+// SERVER DOWN POPUP + TERMINAL
+// ===============================
+function showServerDown() {
+    document.getElementById("serverDownOverlay").style.display = "flex";
+    startDevTerminal();
+}
+
+document.getElementById("closeServerDown").onclick = () => {
+    document.getElementById("serverDownOverlay").style.display = "none";
+};
+
+function startDevTerminal() {
+    const terminal = document.getElementById("devTerminal");
+    const lines = [
+        "> Initializing backend modules...",
+        "> Checking database integrity...",
+        "> Rebuilding search index...",
+        "> Optimizing crawler pipelines...",
+        "> Restarting service...",
+        "> Cleaning outdated cache...",
+        "> Updating dependencies...",
+        "> Monitoring server health...",
+        "> ...",
+    ];
+
+    let i = 0;
+    terminal.innerHTML = "";
+
+    setInterval(() => {
+        terminal.innerHTML += lines[i] + "<br>";
+        i++;
+
+        if (i >= lines.length) {
+            i = 0;
+            terminal.innerHTML = "";
+        }
+    }, 500);
+}
 
 // ===============================
 // GLOBAL STATE
@@ -30,39 +67,11 @@ let allImages = [];
 let allVideos = [];
 
 // ===============================
-// MAIN SEARCH FUNCTION
+// MAIN SEARCH FUNCTION (PREUSMJERENO NA POPUP)
 // ===============================
 function startSearch() {
-    const q = document.getElementById("searchInput").value.trim();
-    if (!q) return;
-
-    document.getElementById("homeScreen").style.display = "none";
-
-    document.getElementById("searchInput").style.opacity = "0";
-    document.querySelector(".tabs").style.opacity = "0";
-    document.getElementById("searchBtn").style.opacity = "0";
-
-    const loading = document.getElementById("loadingScreen");
-    loading.style.display = "flex";
-
-    fetch("https://janienginebackend-1.onrender.com/api/search?q=" + encodeURIComponent(q))
-        .then(res => res.json())
-        .then(data => {
-            setTimeout(() => {
-                loading.style.display = "none";
-                renderResults(data);
-
-                animateLogo();
-
-                searchInputTop.value = q;
-
-            }, 1500);
-        })
-        .catch(err => {
-            console.error("Fetch error:", err);
-            loading.style.display = "none";
-            document.getElementById("webResults").innerHTML = "<p>Error loading results.</p>";
-        });
+    showServerDown();
+    return;
 }
 
 // ===============================
@@ -70,13 +79,12 @@ function startSearch() {
 // ===============================
 searchInputTop.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        document.getElementById("searchInput").value = searchInputTop.value;
-        startSearch();
+        showServerDown();
     }
 });
 
 // ===============================
-// RENDER RESULTS
+// RENDER RESULTS (NE KORISTI SE DOK JE SERVER DOWN)
 // ===============================
 function renderResults(results) {
     const webDiv = document.getElementById("webResults");
@@ -89,67 +97,6 @@ function renderResults(results) {
 
     allImages = [];
     allVideos = [];
-
-    let hasImages = false;
-    let hasVideos = false;
-
-    results.forEach(r => {
-
-        // WEB INFO
-        webDiv.innerHTML += `
-            <div class="web-item">
-                <img src="${r.favicon || ""}" class="favicon" />
-                <div>
-                    <a href="${r.url}" target="_blank" class="title">${r.title}</a>
-                    <p>${cleanHTML(r.content).slice(0, 200)}...</p>
-                </div>
-            </div>
-        `;
-
-        // SLIKE
-        if (r.images && r.images.length > 0) {
-            hasImages = true;
-            r.images.forEach(img => allImages.push(img));
-
-            r.images.slice(0, 2).forEach(img => {
-                imgDiv.innerHTML += `
-                    <div class="image-box">
-                        <img src="${img}" class="thumbImg" onclick="openZoom('image', '${img}')">
-                        <a class="download-btn" href="${img}" download>Download</a>
-                    </div>
-                `;
-            });
-        }
-
-        // VIDEA
-        if (r.youtube && r.youtube.thumbnail) {
-            hasVideos = true;
-            allVideos.push({
-                url: r.url,
-                thumb: r.youtube.thumbnail,
-                title: r.youtube.title,
-                channel: r.youtube.channel
-            });
-
-            vidDiv.innerHTML += `
-                <div class="video-box">
-                    <img src="${r.youtube.thumbnail}" class="video-thumb" onclick="openZoom('video', '${r.url}')">
-                    <h3>${r.youtube.title}</h3>
-                    <p>${r.youtube.channel}</p>
-                    <a href="${r.url}" target="_blank" class="play-btn">▶ Play</a>
-                </div>
-            `;
-        }
-    });
-
-    document.getElementById("imagesTitle").style.display = hasImages ? "block" : "none";
-    document.getElementById("videosTitle").style.display = hasVideos ? "block" : "none";
-
-    imagesBtnTop.style.display = hasImages ? "inline-block" : "none";
-    videosBtnTop.style.display = hasVideos ? "inline-block" : "none";
-
-    imagesBtnTop.onclick = openImagesPage;
-    videosBtnTop.onclick = openVideosPage;
 }
 
 // ===============================
