@@ -33,19 +33,15 @@ function startSearch() {
     const q = document.getElementById("searchInput").value.trim();
     if (!q) return;
 
-    // sakrij home screen
     document.getElementById("homeScreen").style.display = "none";
 
-    // sakrij početni search UI
     document.getElementById("searchInput").style.opacity = "0";
     document.querySelector(".tabs").style.opacity = "0";
     document.getElementById("searchBtn").style.opacity = "0";
 
-    // pokaži loading
     const loading = document.getElementById("loadingScreen");
     loading.style.display = "flex";
 
-    // fetch prema backendu
     fetch("https://janienginebackend-1.onrender.com/api/search?q=" + encodeURIComponent(q))
         .then(res => res.json())
         .then(data => {
@@ -53,10 +49,8 @@ function startSearch() {
                 loading.style.display = "none";
                 renderResults(data);
 
-                // pokreni animaciju loga (bez blur-a)
                 animateLogo();
 
-                // upiši query u gornji search
                 searchInputTop.value = q;
 
             }, 1500);
@@ -79,7 +73,7 @@ searchInputTop.addEventListener("keydown", (e) => {
 });
 
 // ===============================
-// RENDER RESULTS (INFO + PAR MEDIA)
+// RENDER RESULTS
 // ===============================
 function renderResults(results) {
     const webDiv = document.getElementById("webResults");
@@ -97,6 +91,7 @@ function renderResults(results) {
     let hasVideos = false;
 
     results.forEach(r => {
+
         // WEB INFO
         webDiv.innerHTML += `
             <div class="web-item">
@@ -108,7 +103,7 @@ function renderResults(results) {
             </div>
         `;
 
-        // SLIKE — skupljamo sve, ali na glavnoj samo malo
+        // SLIKE
         if (r.images && r.images.length > 0) {
             hasImages = true;
             r.images.forEach(img => allImages.push(img));
@@ -123,7 +118,7 @@ function renderResults(results) {
             });
         }
 
-        // VIDEA — skupljamo sve, na glavnoj jedan
+        // VIDEA
         if (r.youtube && r.youtube.thumbnail) {
             hasVideos = true;
             allVideos.push({
@@ -144,15 +139,12 @@ function renderResults(results) {
         }
     });
 
-    // TITLOVI
     document.getElementById("imagesTitle").style.display = hasImages ? "block" : "none";
     document.getElementById("videosTitle").style.display = hasVideos ? "block" : "none";
 
-    // GORNJI GUMBI
     imagesBtnTop.style.display = hasImages ? "inline-block" : "none";
     videosBtnTop.style.display = hasVideos ? "inline-block" : "none";
 
-    // KLIK → NOVI PAGE
     imagesBtnTop.onclick = openImagesPage;
     videosBtnTop.onclick = openVideosPage;
 }
@@ -230,7 +222,7 @@ function openVideosPage() {
 }
 
 // ===============================
-// FULLSCREEN ZOOM (IMAGE + VIDEO)
+// FULLSCREEN ZOOM
 // ===============================
 function openZoom(type, src) {
     const overlay = document.getElementById("zoomOverlay");
@@ -259,28 +251,17 @@ document.getElementById("zoomOverlay").onclick = () => {
     document.getElementById("zoomOverlay").style.display = "none";
 };
 
-document.getElementById("zoomOverlay").onclick = () => {
-    document.getElementById("zoomOverlay").style.display = "none";
-};
-
 // ===============================
 // LOGO ANIMATION (bez blur-a)
 // ===============================
 function animateLogo() {
     const title = document.getElementById("janiTitle");
 
-    // ostane 0.5 sekundi u sredini
     setTimeout(() => {
-
-        // samo shrink + move to corner
         title.classList.add("small");
 
-        // pričekaj da animacija završi (0.9s)
         setTimeout(() => {
-
-            // tek sada prikaži top bar
             document.getElementById("topBar").style.display = "flex";
-
         }, 900);
 
     }, 500);
@@ -292,7 +273,6 @@ function animateLogo() {
 document.getElementById("janiTitle").addEventListener("click", () => {
     document.getElementById("janiTitle").classList.remove("small");
 
-    // sakrij rezultate
     document.getElementById("webResults").innerHTML = "";
     document.getElementById("imagesSection").innerHTML = "";
     document.getElementById("videosSection").innerHTML = "";
@@ -300,16 +280,12 @@ document.getElementById("janiTitle").addEventListener("click", () => {
     document.getElementById("imagesTitle").style.display = "none";
     document.getElementById("videosTitle").style.display = "none";
 
-    // sakrij gornji bar
     document.getElementById("topBar").style.display = "none";
 
-    // očisti gornji search
     searchInputTop.value = "";
 
-    // pokaži home screen
     document.getElementById("homeScreen").style.display = "block";
 
-    // vrati početni search UI
     document.getElementById("searchInput").style.opacity = "1";
     document.querySelector(".tabs").style.opacity = "1";
     document.getElementById("searchBtn").style.opacity = "1";
