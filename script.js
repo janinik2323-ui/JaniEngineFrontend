@@ -17,17 +17,22 @@ function cleanHTML(text) {
 }
 
 // ===============================
-// SERVER DOWN POPUP + TERMINAL
+// SERVER DOWN POPUP + TERMINAL + ERROR BLINK + GLITCH
 // ===============================
 function showServerDown() {
-    document.getElementById("serverDownOverlay").style.display = "flex";
+    const overlay = document.getElementById("serverDownOverlay");
+    overlay.style.display = "flex";
+
     startDevTerminal();
+    startErrorBlink();
+    startGlitchEffect();
 }
 
 document.getElementById("closeServerDown").onclick = () => {
     document.getElementById("serverDownOverlay").style.display = "none";
 };
 
+// TERMINAL ANIMACIJA
 function startDevTerminal() {
     const terminal = document.getElementById("devTerminal");
     const lines = [
@@ -54,6 +59,27 @@ function startDevTerminal() {
             terminal.innerHTML = "";
         }
     }, 500);
+}
+
+// ERROR BLINK
+function startErrorBlink() {
+    const title = document.querySelector("#serverDownBox h2");
+    title.classList.add("errorBlink");
+}
+
+// GLITCH EFFECT
+function startGlitchEffect() {
+    const title = document.querySelector("#serverDownBox h2");
+
+    setInterval(() => {
+        title.style.transform = "translateX(2px)";
+        setTimeout(() => {
+            title.style.transform = "translateX(-2px)";
+        }, 50);
+        setTimeout(() => {
+            title.style.transform = "translateX(0px)";
+        }, 100);
+    }, 800);
 }
 
 // ===============================
