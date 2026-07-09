@@ -1,4 +1,22 @@
 // ===============================
+// CLEAN HTML (sprječava video/audio/script/iframe bugove)
+// ===============================
+function cleanHTML(text) {
+    if (!text) return "";
+
+    return text
+        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+        .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, "")
+        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+        .replace(/<audio[^>]*>[\s\S]*?<\/audio>/gi, "")
+        .replace(/<video[^>]*>[\s\S]*?<\/video>/gi, "")
+        .replace(/<source[^>]*>/gi, "")
+        .replace(/<[^>]+>/g, "")
+        .replace(/&nbsp;/g, " ")
+        .trim();
+}
+
+// ===============================
 // GLOBAL STATE
 // ===============================
 const searchInputTop = document.getElementById("searchInputTop");
@@ -35,7 +53,7 @@ function startSearch() {
                 loading.style.display = "none";
                 renderResults(data);
 
-                // pokreni animaciju loga
+                // pokreni animaciju loga (bez blur-a)
                 animateLogo();
 
                 // upiši query u gornji search
@@ -85,7 +103,7 @@ function renderResults(results) {
                 <img src="${r.favicon || ""}" class="favicon" />
                 <div>
                     <a href="${r.url}" target="_blank" class="title">${r.title}</a>
-                    <p>${r.content?.slice(0, 200)}...</p>
+                    <p>${cleanHTML(r.content).slice(0, 200)}...</p>
                 </div>
             </div>
         `;
@@ -242,27 +260,16 @@ document.getElementById("zoomOverlay").onclick = () => {
 };
 
 // ===============================
-// LOGO ANIMATION (JANI ENGINE U KUT + LIQUID BLUR)
+// LOGO ANIMATION (bez blur-a)
 // ===============================
 function animateLogo() {
     const title = document.getElementById("janiTitle");
 
-    // ostane 0.5 sekundi u sredini
     setTimeout(() => {
-
-        // liquid blur efekt
-        title.classList.add("jani-liquid");
-
-        // shrink + move to corner
         title.classList.add("small");
 
-        // pričekaj da animacija završi (0.9s)
         setTimeout(() => {
-            title.classList.remove("jani-liquid");
-
-            // tek sada prikaži top bar
             document.getElementById("topBar").style.display = "flex";
-
         }, 900);
 
     }, 500);
