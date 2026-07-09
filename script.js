@@ -259,17 +259,28 @@ document.getElementById("zoomOverlay").onclick = () => {
     document.getElementById("zoomOverlay").style.display = "none";
 };
 
+document.getElementById("zoomOverlay").onclick = () => {
+    document.getElementById("zoomOverlay").style.display = "none";
+};
+
 // ===============================
 // LOGO ANIMATION (bez blur-a)
 // ===============================
 function animateLogo() {
     const title = document.getElementById("janiTitle");
 
+    // ostane 0.5 sekundi u sredini
     setTimeout(() => {
+
+        // samo shrink + move to corner
         title.classList.add("small");
 
+        // pričekaj da animacija završi (0.9s)
         setTimeout(() => {
+
+            // tek sada prikaži top bar
             document.getElementById("topBar").style.display = "flex";
+
         }, 900);
 
     }, 500);
