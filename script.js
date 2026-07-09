@@ -60,11 +60,24 @@ function startDevTerminal() {
         }
     }, 500);
 }
+applyWarningStyle();
 
 // ERROR BLINK
 function startErrorBlink() {
     const title = document.querySelector("#serverDownBox h2");
     title.classList.add("errorBlink");
+}
+function applyWarningStyle() {
+    const title = document.querySelector("#serverDownBox h2");
+
+    // promijeni boju + glow
+    title.classList.add("warningTitle");
+
+    // dodaj warning ikonu
+    const icon = document.createElement("span");
+    icon.classList.add("warningIcon");
+    icon.innerText = "⚠";
+    title.appendChild(icon);
 }
 
 // GLITCH EFFECT
