@@ -1,82 +1,18 @@
-<style>
-audio, video {
-    display: none !important;
-}
-</style>
-
 <!DOCTYPE html>
 <html lang="hr">
 <head>
     <meta charset="UTF-8">
     <title>Jani Engine</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Saira+SemiCondensed:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
-    <noscript>Your browser does not support JavaScript.</noscript>
 </head>
 
 <body class="light">
 
-    <!-- LOADING -->
-    <div id="loadingScreen">
-        <div id="loadingBox"></div>
-        <div id="loadingJ">J</div>
-    </div>
-
-    <!-- THEME BUTTON -->
-    <button id="themeToggle" class="theme-btn">☀ / 🌙</button>
-
-    <!-- JANI ENGINE TITLE -->
-    <div id="janiTitle">
-        <span class="jani">JANI</span>
-        <span class="engine">ENGINE</span>
-    </div>
-
     <!-- HOME SCREEN -->
     <div id="homeScreen" class="home-screen">
-
         <input id="searchInput" type="text" placeholder="Search anything…" class="search-input">
-
-        <div class="tabs">
-            <span class="tab">Web</span>
-            <span class="tab">Images</span>
-            <span class="tab">Videos</span>
-            <span class="tab">News</span>
-        </div>
-
         <button id="searchBtn" class="search-btn">Search</button>
-    </div>
-
-    <!-- TOP BAR -->
-    <div id="topBar" style="display:none;">
-        <input id="searchInputTop" placeholder="Search..." />
-        <div id="sectionButtons">
-            <button id="imagesBtnTop">Images</button>
-            <button id="videosBtnTop">Videos</button>
-        </div>
-    </div>
-
-    <!-- SAFE RESULTS WRAPPER -->
-    <div id="safeWrapper" data-clean="true">
-
-        <div id="webResults" class="web-results safe-html"></div>
-
-        <h2 id="imagesTitle" style="display:none;">Images</h2>
-        <div id="imagesSection" class="image-grid"></div>
-
-        <h2 id="videosTitle" style="display:none;">Videos</h2>
-        <div id="videosSection" class="video-grid"></div>
-
-    </div>
-
-    <!-- FULLSCREEN ZOOM -->
-    <div id="zoomOverlay">
-        <div id="zoomContent">
-            <img id="zoomImg" />
-            <video id="zoomVideo" controls></video>
-            <a id="downloadBtn" download>Download</a>
-        </div>
     </div>
 
     <!-- SERVER DOWN POPUP -->
@@ -84,8 +20,8 @@ audio, video {
         <div id="serverDownBox">
             <h2>JANI ENGINE</h2>
             <p>
-                Server is down due to malfunction issues outside the frontend environment.<br>
-                Please wait until the maintenance process completes and the backend services are restored.
+                Server is down due to malfunction issues.<br>
+                Please wait until backend services are restored.
             </p>
 
             <div id="devPreview">
@@ -97,8 +33,27 @@ audio, video {
         </div>
     </div>
 
-    <!-- WARNING SOUND (3s power-down) -->
-    <audio id="warningSound" src="warning.mp3"></audio>
+    <!-- NEXT UPDATES WINDOW -->
+    <div id="nextUpdatesOverlay">
+        <div id="nextUpdatesBox">
+            <h2 id="updatesTitle">In the next updates expect these upgrades...</h2>
+
+            <ul id="updatesList">
+                <li class="updateItem">New search page interface</li>
+                <li class="updateItem">Original Loading icon</li>
+                <li class="updateItem">Better search experience</li>
+                <li class="updateItem">Accessibility to manage and create an account</li>
+            </ul>
+
+            <button id="closeUpdates">Close</button>
+        </div>
+    </div>
+
+    <!-- WARNING SOUND -->
+    <audio id="warningSound" src="Warning.mp3"></audio>
+
+    <!-- OPEN WINDOW SOUND -->
+    <audio id="openWindowSound" src="open.window"></audio>
 
     <script src="script.js"></script>
 </body>

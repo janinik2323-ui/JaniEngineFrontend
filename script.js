@@ -11,6 +11,7 @@ function showServerDown() {
 
 document.getElementById("closeServerDown").onclick = () => {
     document.getElementById("serverDownOverlay").style.display = "none";
+    openNextUpdatesWindow();
 };
 
 // ===============================
@@ -50,13 +51,10 @@ function startDevTerminal() {
 function applyWarningStyle() {
     const title = document.querySelector("#serverDownBox h2");
 
-    // remove old icons
     title.querySelectorAll(".warningIcon").forEach(icon => icon.remove());
 
-    // add red glow
     title.classList.add("warningTitle");
 
-    // add warning icon
     const icon = document.createElement("span");
     icon.classList.add("warningIcon");
     icon.innerText = "⚠";
@@ -64,18 +62,35 @@ function applyWarningStyle() {
 }
 
 // ===============================
-// SOUND EFFECT (3s POWER-DOWN)
+// WARNING SOUND
 // ===============================
 function playWarningSound() {
     const sound = document.getElementById("warningSound");
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+}
 
-    sound.currentTime = 0;   // reset
-    sound.volume = 1.0;      // full volume
+// ===============================
+// NEXT UPDATES WINDOW
+// ===============================
+function openNextUpdatesWindow() {
+    const overlay = document.getElementById("nextUpdatesOverlay");
+    const items = document.querySelectorAll(".updateItem");
+    const sound = document.getElementById("openWindowSound");
 
-    sound.play().catch(() => {
-        console.log("Autoplay blocked — user interaction required.");
+    overlay.style.display = "flex";
+
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+
+    items.forEach((item, index) => {
+        item.style.animationDelay = (index * 0.55) + "s";
     });
 }
+
+document.getElementById("closeUpdates").onclick = () => {
+    document.getElementById("nextUpdatesOverlay").style.display = "none";
+};
 
 // ===============================
 // SEARCH BUTTON + ENTER
