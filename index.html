@@ -6,6 +6,9 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Saira+SemiCondensed:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- BLOKIRAJ GTM / SCRIPT / IFRAME INJECTION -->
+    <noscript>Your browser does not support JavaScript.</noscript>
 </head>
 
 <body class="light">
@@ -19,7 +22,7 @@
     <!-- THEME BUTTON -->
     <button id="themeToggle" class="theme-btn">☀ / 🌙</button>
 
-    <!-- JANI ENGINE TITLE (MORA BITI IZVAN HOME SCREENA) -->
+    <!-- JANI ENGINE TITLE -->
     <div id="janiTitle">
         <span class="jani">JANI</span>
         <span class="engine">ENGINE</span>
@@ -28,10 +31,8 @@
     <!-- HOME SCREEN -->
     <div id="homeScreen" class="home-screen">
 
-        <!-- SEARCH INPUT (HOME) -->
         <input id="searchInput" type="text" placeholder="Search anything…" class="search-input">
 
-        <!-- TABS -->
         <div class="tabs">
             <span class="tab">Web</span>
             <span class="tab">Images</span>
@@ -39,11 +40,10 @@
             <span class="tab">News</span>
         </div>
 
-        <!-- SEARCH BUTTON -->
         <button id="searchBtn" class="search-btn">Search</button>
     </div>
 
-    <!-- TOP BAR (POJAVLJUJE SE TEK NAKON ANIMACIJE) -->
+    <!-- TOP BAR -->
     <div id="topBar" style="display:none;">
         <input id="searchInputTop" placeholder="Search..." />
         <div id="sectionButtons">
@@ -52,16 +52,21 @@
         </div>
     </div>
 
-    <!-- RESULTS -->
-    <div id="webResults" class="web-results"></div>
+    <!-- SAFE RESULTS WRAPPER -->
+    <div id="safeWrapper" data-clean="true">
 
-    <!-- IMAGES -->
-    <h2 id="imagesTitle" style="display:none;">Images</h2>
-    <div id="imagesSection" class="image-grid"></div>
+        <!-- WEB RESULTS -->
+        <div id="webResults" class="web-results safe-html"></div>
 
-    <!-- VIDEOS -->
-    <h2 id="videosTitle" style="display:none;">Videos</h2>
-    <div id="videosSection" class="video-grid"></div>
+        <!-- IMAGES -->
+        <h2 id="imagesTitle" style="display:none;">Images</h2>
+        <div id="imagesSection" class="image-grid"></div>
+
+        <!-- VIDEOS -->
+        <h2 id="videosTitle" style="display:none;">Videos</h2>
+        <div id="videosSection" class="video-grid"></div>
+
+    </div>
 
     <!-- FULLSCREEN ZOOM -->
     <div id="zoomOverlay">
