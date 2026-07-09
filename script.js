@@ -15,6 +15,9 @@ function cleanHTML(text) {
         .replace(/&nbsp;/g, " ")
         .trim();
 }
+r.title = sanitize(r.title);
+r.content = sanitize(r.content);
+r.url = sanitize(r.url);
 
 // ===============================
 // GLOBAL STATE

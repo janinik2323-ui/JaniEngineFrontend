@@ -1,4 +1,9 @@
-﻿const http = require("http");
+﻿if (req.url.includes("/audio") || req.url.includes("/video") || req.url.includes("/download")) {
+    res.writeHead(204);
+    return res.end();
+}
+
+const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
