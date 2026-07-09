@@ -65,8 +65,6 @@ body.light #loadingScreen {
         boxFade 2.6s infinite ease-in-out;
 }
 
-
-
 @keyframes boxGrow {
     0%   { transform: scale(0.7); opacity: 1; }
     60%  { transform: scale(1.05); opacity: 1; }
@@ -79,19 +77,15 @@ body.light #loadingScreen {
     100% { opacity: 1; }
 }
 
-
-
-
 #loadingJ {
     font-family: 'Saira SemiCondensed', sans-serif;
     font-size: 110px;
     font-weight: 900;
     transform: scaleX(1.18);
-    color: black;   /* LIGHT TEMA */
+    color: black;
     z-index: 2;
     animation: jFade 2.6s infinite ease-in-out;
 }
-
 
 body.dark #loadingJ {
     color: white;
@@ -106,16 +100,22 @@ body.dark #loadingJ {
 /* HOME SCREEN */
 .home-screen {
     text-align: center;
-    margin-top: 120px;
+    margin-top: 220px; /* povećano jer je logo absolute */
 }
 
-.jani-logo {
+/* JANI ENGINE TITLE */
+#janiTitle {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%) scale(1);
     font-family: 'Saira SemiCondensed', sans-serif;
     font-size: 68px;
     font-weight: 900;
     letter-spacing: 2px;
-    transform: scaleX(1.18);
-    margin-bottom: 20px;
+    transform-origin: left top;
+    transition: transform 0.9s ease, top 0.9s ease, left 0.9s ease;
+    z-index: 50;
 }
 
 .jani {
@@ -124,6 +124,39 @@ body.dark #loadingJ {
 
 .engine {
     color: #333;
+}
+
+/* ANIMACIJA — shrink + move to corner */
+#janiTitle.small {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    transform: scale(0.55);
+    z-index: 9999;
+}
+
+/* LIQUID BLUR EFFECT */
+@keyframes liquidBlur {
+    0% {
+        filter: blur(0px);
+        opacity: 1;
+    }
+    40% {
+        filter: blur(6px);
+        opacity: 0.85;
+    }
+    70% {
+        filter: blur(10px);
+        opacity: 0.75;
+    }
+    100% {
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+.jani-liquid {
+    animation: liquidBlur 0.9s ease forwards;
 }
 
 /* SEARCH INPUT */
@@ -175,88 +208,12 @@ body.dark #loadingJ {
     background: #0088cc;
 }
 
-/* RESULTS */
-#results {
-    margin: 40px auto;
-    width: 70%;
-    font-size: 18px;
-}
-#janiTitle {
-    position: absolute;
-    top: 120px; /* ovo je mjesto gdje ga želiš */
-    left: 50%;
-    transform: translateX(-50%) scale(1);
-    transition: transform 0.9s ease, top 0.9s ease, left 0.9s ease;
-    z-index: 50;
-}
-
-#janiTitle.small {
-    position: fixed;      /* VAŽNO: sada te prati dok skrolaš */
-    top: 20px;
-    left: 20px;
-    transform: scale(0.55);
-    z-index: 9999;
-}
-
-.home-screen {
-    margin-top: 220px; /* povećano jer je logo absolute */
-}
-
-/* DARK MODE FIXES */
-
-/* Search input */
-body.dark .search-input {
-    background: #222;
-    color: white;
-    box-shadow: 0 0 10px #00aaff55;
-}
-
-/* Tabs */
-body.dark .tab {
-    color: #ccc;
-}
-body.dark .tab:hover {
-    color: #00aaff;
-}
-
-/* Search button */
-body.dark .search-btn {
-    background: #0088cc;
-}
-body.dark .search-btn:hover {
-    background: #006699;
-}
-
-/* Results */
-body.dark #results {
-    color: white;
-}
-
-/* ENGINE tekst */
-body.dark .engine {
-    color: #ddd;
-}
-
-/* Theme button */
-body.dark .theme-btn {
-    background: #222;
-    color: #00aaff;
-    box-shadow: 0 0 12px #00aaff55;
-}
-
-/* Loading background */
-body.dark #loadingScreen {
-    background: rgba(0, 0, 0, 0.85);
-}
-/* ============================
-   TOP BAR (SEARCH + BUTTONS)
-   ============================ */
-
+/* TOP BAR (pojavljuje se tek nakon animacije) */
 #topBar {
-  display: none;              /* sakriven dok ne searchaš */
+  display: none;
   position: relative;
   margin: 40px auto 20px;
-  width: 70%;
+  width: 45%;
   padding: 12px 20px;
   background: rgba(255,255,255,0.9);
   border-radius: 20px;
@@ -265,33 +222,22 @@ body.dark #loadingScreen {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  animation: liquidAppear 0.6s ease forwards;
-}
-
-@keyframes liquidAppear {
-  0% { transform: translateY(-20px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
 }
 
 #searchInputTop {
-  width: 45%;                 /* ista širina kao početni search */
+  width: 100%;
   padding: 10px 16px;
   font-size: 17px;
   border-radius: 20px;
   border: none;
   outline: none;
-  background: #f0f0f0;
-  transition: box-shadow 0.3s ease, background 0.3s ease;
-}
-
-#searchInputTop:focus {
-  box-shadow: 0 0 14px #00aaff, 0 0 28px #00aaff55;
-  background: #ffffffee;
+  background: #ffffffcc;
 }
 
 #sectionButtons {
   display: flex;
   gap: 10px;
+  margin-left: 20px;
 }
 
 #sectionButtons button {
@@ -302,57 +248,39 @@ body.dark #loadingScreen {
   color: white;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
-#sectionButtons button:hover {
-  background: #0088cc;
-  transform: translateY(-2px);
+/* DARK MODE FIXES */
+body.dark .search-input {
+    background: #222;
+    color: white;
+    box-shadow: 0 0 10px #00aaff55;
 }
 
-/* ============================
-   FULLSCREEN ZOOM
-   ============================ */
-
-#zoomOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 999999;
+body.dark .tab {
+    color: #ccc;
+}
+body.dark .tab:hover {
+    color: #00aaff;
 }
 
-#zoomContent {
-  position: relative;
+body.dark .search-btn {
+    background: #0088cc;
+}
+body.dark .search-btn:hover {
+    background: #006699;
 }
 
-#zoomImg, #zoomVideo {
-  max-width: 90vw;
-  max-height: 80vh;
-  border-radius: 12px;
-  animation: zoomIn 0.3s ease;
+body.dark .engine {
+    color: #ddd;
 }
 
-@keyframes zoomIn {
-  from { transform: scale(0.7); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+body.dark .theme-btn {
+    background: #222;
+    color: #00aaff;
+    box-shadow: 0 0 12px #00aaff55;
 }
 
-#downloadBtn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background: #00aaff;
-  padding: 12px 20px;
-  border-radius: 50px;
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  transition: 0.2s;
-}
-
-#downloadBtn:hover {
-  background: #0088cc;
+body.dark #loadingScreen {
+    background: rgba(0, 0, 0, 0.85);
 }

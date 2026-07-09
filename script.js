@@ -34,14 +34,13 @@ function startSearch() {
             setTimeout(() => {
                 loading.style.display = "none";
                 renderResults(data);
-                animateLogo();
 
-                // pokaži gornji bar tek sada
-                const topBar = document.getElementById("topBar");
-                topBar.style.display = "flex";
+                // pokreni animaciju loga
+                animateLogo();
 
                 // upiši query u gornji search
                 searchInputTop.value = q;
+
             }, 1500);
         })
         .catch(err => {
@@ -243,13 +242,30 @@ document.getElementById("zoomOverlay").onclick = () => {
 };
 
 // ===============================
-// LOGO ANIMATION (JANI ENGINE U KUT)
+// LOGO ANIMATION (JANI ENGINE U KUT + LIQUID BLUR)
 // ===============================
 function animateLogo() {
     const title = document.getElementById("janiTitle");
+
+    // ostane 0.5 sekundi u sredini
     setTimeout(() => {
+
+        // liquid blur efekt
+        title.classList.add("jani-liquid");
+
+        // shrink + move to corner
         title.classList.add("small");
-    }, 1000);
+
+        // pričekaj da animacija završi (0.9s)
+        setTimeout(() => {
+            title.classList.remove("jani-liquid");
+
+            // tek sada prikaži top bar
+            document.getElementById("topBar").style.display = "flex";
+
+        }, 900);
+
+    }, 500);
 }
 
 // ===============================

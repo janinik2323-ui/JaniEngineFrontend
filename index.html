@@ -10,16 +10,6 @@
 
 <body class="light">
 
-    <!-- STICKY TOP BAR -->
-    <div id="topBar">
-        <input id="searchInputTop" placeholder="Search..." />
-
-        <div id="sectionButtons">
-            <button id="imagesBtnTop">Images</button>
-            <button id="videosBtnTop">Videos</button>
-        </div>
-    </div>
-
     <!-- LOADING -->
     <div id="loadingScreen">
         <div id="loadingBox"></div>
@@ -29,14 +19,14 @@
     <!-- THEME BUTTON -->
     <button id="themeToggle" class="theme-btn">☀ / 🌙</button>
 
+    <!-- JANI ENGINE TITLE (MORA BITI IZVAN HOME SCREENA) -->
+    <div id="janiTitle">
+        <span class="jani">JANI</span>
+        <span class="engine">ENGINE</span>
+    </div>
+
     <!-- HOME SCREEN -->
     <div id="homeScreen" class="home-screen">
-
-        <!-- LOGO -->
-        <div class="jani-logo" id="janiTitle">
-            <span class="jani">JANI</span>
-            <span class="engine">ENGINE</span>
-        </div>
 
         <!-- SEARCH INPUT (HOME) -->
         <input id="searchInput" type="text" placeholder="Search anything…" class="search-input">
@@ -51,6 +41,15 @@
 
         <!-- SEARCH BUTTON -->
         <button id="searchBtn" class="search-btn">Search</button>
+    </div>
+
+    <!-- TOP BAR (POJAVLJUJE SE TEK NAKON ANIMACIJE) -->
+    <div id="topBar" style="display:none;">
+        <input id="searchInputTop" placeholder="Search..." />
+        <div id="sectionButtons">
+            <button id="imagesBtnTop">Images</button>
+            <button id="videosBtnTop">Videos</button>
+        </div>
     </div>
 
     <!-- RESULTS -->
