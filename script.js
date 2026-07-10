@@ -62,6 +62,26 @@ function applyWarningStyle() {
     icon.innerText = "⚠";
     title.appendChild(icon);
 }
+function openNextUpdatesWindow() {
+    const overlay = document.getElementById("nextUpdatesOverlay");
+    const items = document.querySelectorAll(".updateItem");
+    const sound = document.getElementById("openWindowSound");
+document.getElementById("closeUpdates").onclick = () => {
+    document.getElementById("nextUpdatesOverlay").style.display = "none";
+};
+
+    overlay.style.display = "flex";
+
+    // pusti zvuk open.window
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+
+    // red-po-red animacija
+    items.forEach((item, index) => {
+        item.style.animationDelay = (index * 0.55) + "s";
+    });
+}
+
 
 // ===============================
 // SOUND EFFECT (3s POWER-DOWN)
@@ -80,8 +100,11 @@ function playWarningSound() {
 // ===============================
 // SEARCH BUTTON + ENTER
 // ===============================
-document.getElementById("searchBtn").onclick = showServerDown;
+document.getElementById("closeServerDown").onclick = () => {
+    document.getElementById("serverDownOverlay").style.display = "none";
 
-document.getElementById("searchInput").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") showServerDown();
-});
+    // čekaj 1 sekundu pa otvori novi prozor
+    setTimeout(() => {
+        openNextUpdatesWindow();
+    }, 1000);
+};
