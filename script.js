@@ -119,3 +119,12 @@ document.getElementById("searchBtn").onclick = showServerDown;
 document.getElementById("searchInput").addEventListener("keydown", (e) => {
     if (e.key === "Enter") showServerDown();
 });
+
+document.getElementById("closeServerDown").onclick = () => {
+    document.getElementById("serverDownOverlay").style.display = "none";
+
+    // čekaj 1 sekundu pa otvori novi prozor
+    setTimeout(() => {
+        openNextUpdatesWindow();
+    }, 1000);
+};
