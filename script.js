@@ -9,6 +9,7 @@ function showServerDown() {
     playWarningSound();
 }
 
+// CLOSE WARNING POPUP → OPEN NEXT WINDOW AFTER 1s
 document.getElementById("closeServerDown").onclick = () => {
     document.getElementById("serverDownOverlay").style.display = "none";
 
@@ -67,6 +68,11 @@ function applyWarningStyle() {
     icon.innerText = "⚠";
     title.appendChild(icon);
 }
+
+
+// ===============================
+// NEXT UPDATES WINDOW
+// ===============================
 function openNextUpdatesWindow() {
     const overlay = document.getElementById("nextUpdatesOverlay");
     const items = document.querySelectorAll(".updateItem");
@@ -74,15 +80,17 @@ function openNextUpdatesWindow() {
 
     overlay.style.display = "flex";
 
-    // pusti zvuk open.window
+    // play sound
     sound.currentTime = 0;
     sound.play().catch(() => {});
 
-    // red-po-red animacija
+    // red-by-red animation
     items.forEach((item, index) => {
         item.style.animationDelay = (index * 0.55) + "s";
     });
 }
+
+// CLOSE NEXT UPDATES WINDOW
 document.getElementById("closeUpdates").onclick = () => {
     document.getElementById("nextUpdatesOverlay").style.display = "none";
 };
@@ -94,22 +102,20 @@ document.getElementById("closeUpdates").onclick = () => {
 function playWarningSound() {
     const sound = document.getElementById("warningSound");
 
-    sound.currentTime = 0;   // reset
-    sound.volume = 1.0;      // full volume
+    sound.currentTime = 0;
+    sound.volume = 1.0;
 
     sound.play().catch(() => {
         console.log("Autoplay blocked — user interaction required.");
     });
 }
 
+
 // ===============================
 // SEARCH BUTTON + ENTER
 // ===============================
-document.getElementById("closeServerDown").onclick = () => {
-    document.getElementById("serverDownOverlay").style.display = "none";
+document.getElementById("searchBtn").onclick = showServerDown;
 
-    // čekaj 1 sekundu pa otvori novi prozor
-    setTimeout(() => {
-        openNextUpdatesWindow();
-    }, 1000);
-};
+document.getElementById("searchInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") showServerDown();
+});
