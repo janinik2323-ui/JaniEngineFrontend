@@ -66,9 +66,6 @@ function openNextUpdatesWindow() {
     const overlay = document.getElementById("nextUpdatesOverlay");
     const items = document.querySelectorAll(".updateItem");
     const sound = document.getElementById("openWindowSound");
-document.getElementById("closeUpdates").onclick = () => {
-    document.getElementById("nextUpdatesOverlay").style.display = "none";
-};
 
     overlay.style.display = "flex";
 
@@ -81,6 +78,9 @@ document.getElementById("closeUpdates").onclick = () => {
         item.style.animationDelay = (index * 0.55) + "s";
     });
 }
+document.getElementById("closeUpdates").onclick = () => {
+    document.getElementById("nextUpdatesOverlay").style.display = "none";
+};
 
 
 // ===============================
