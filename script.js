@@ -11,7 +11,12 @@ function showServerDown() {
 
 document.getElementById("closeServerDown").onclick = () => {
     document.getElementById("serverDownOverlay").style.display = "none";
+
+    setTimeout(() => {
+        openNextUpdatesWindow();
+    }, 1000);
 };
+
 
 // ===============================
 // TERMINAL ANIMATION
