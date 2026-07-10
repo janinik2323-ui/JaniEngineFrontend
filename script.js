@@ -120,3 +120,10 @@ document.getElementById("searchInput").addEventListener("keydown", (e) => {
     if (e.key === "Enter") showServerDown();
 });
 
+document.getElementById("closeServerDown").onclick = () => {
+    document.getElementById("serverDownOverlay").style.display = "none";
+
+    setTimeout(() => {
+        openNextUpdatesWindow();
+    }, 1000);
+};
